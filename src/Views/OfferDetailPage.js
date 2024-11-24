@@ -20,10 +20,12 @@ function OfferDetailsPage() {
       </nav>
 
       <section className="section">
-        <h1 className="title">Detalles de la Oferta</h1>
+        <h1 className="title">Oferta Generada:</h1>
         <div className="box">
           <div className="content">
-            <p>{content}</p>
+            {content.split('\n').map((line, index) => (
+              <p key={index}>{line}</p>
+            ))}
           </div>
         </div>
       </section>
