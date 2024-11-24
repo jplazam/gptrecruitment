@@ -12,6 +12,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         {/* Ruta para la página de Generar Oferta */}
         <Route path="/generar-oferta" element={<GenerateOfferPage />} />
+        <Route path="/detalle-oferta" element={<OfferDetailsPage />} />
       </Routes>
     </Router>
   );

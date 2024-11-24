@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function GenerateOfferPage() {
 
@@ -11,6 +12,8 @@ function GenerateOfferPage() {
     type: 'Publicación LinkedIn'
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setOfferData({
@@ -22,13 +25,22 @@ function GenerateOfferPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const jsonOffer = {
+      role: offerData.role,
+      description: offerData.description,
+      requirements: offerData.requirements,
+      rent: offerData.rent,
+      mail: offerData.mail,
+      type: offerData.type
+    };
+
     try {
       const response = await fetch('https://zueux19alh.execute-api.us-east-2.amazonaws.com/crear-publicacion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(offerData)
+        body: JSON.stringify(jsonOffer)
       });
 
       if (!response.ok) {
@@ -36,8 +48,8 @@ function GenerateOfferPage() {
       }
 
       const data = await response.json();
-      alert('Oferta generada con éxito');
-      console.log(data);
+
+      navigate('/detalle-oferta', { state: data });
 
     } catch (error) {
       console.error('Error:', error);
