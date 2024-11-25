@@ -9,8 +9,15 @@ function GenerateOfferPage() {
     requirements: '',
     rent: 0,
     mail: '',
-    type: 'Publicación LinkedIn'
+    type: 'Publicación LinkedIn',
+    company: '',
+    companyType: 'Startup',
+    industry: '',
+    companySize: 'Pequeña',
+    location: '',
+    companyDescription: ''
   });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -25,13 +32,21 @@ function GenerateOfferPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     const jsonOffer = {
       role: offerData.role,
       description: offerData.description,
       requirements: offerData.requirements,
       rent: offerData.rent,
       mail: offerData.mail,
-      type: offerData.type
+      type: offerData.type,
+      company: offerData.company,
+      companyType: offerData.companyType,
+      industry: offerData.industry,
+      companySize: offerData.companySize,
+      location: offerData.location,
+      companyDescription: offerData.companyDescription
     };
 
     try {
@@ -44,6 +59,7 @@ function GenerateOfferPage() {
       });
 
       if (!response.ok) {
+        console.log(response);
         throw new Error('Error al generar oferta');
       }
 
@@ -54,6 +70,8 @@ function GenerateOfferPage() {
     } catch (error) {
       console.error('Error:', error);
       alert('Hubo un problema al generar la oferta');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -61,13 +79,100 @@ function GenerateOfferPage() {
     <div>
       <nav className="navbar">
         <div className="navbar-brand">
-          <a className="navbar-item">GPTRecruitment</a>
+          <a className="navbar-item" href='/'>GPTRecruitment</a>
         </div>
       </nav>
 
       <section className="section">
         <h1 className="title">Generar nueva oferta</h1>
         <form onSubmit={handleSubmit}>
+          <div className="field">
+            <label className="label">Nombre de la empresa</label>
+            <div className="control">
+              <input className="input"
+                type="text"
+                placeholder="GPTRecruitment Labs"
+                name="company"
+                value={offerData.company}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className='label'>Tipo de empresa</label>
+            <div className="control">
+              <div className="select">
+                <select
+                  name="companyType"
+                  value={offerData.companyType}
+                  onChange={handleChange}
+                >
+                  <option>Startup</option>
+                  <option>Corporación</option>
+                  <option>ONG</option>
+                  <option>Empresa familiar</option>
+                  <option>Organismo del Estado</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className='field'>
+            <label className='label'>Industria</label>
+            <div className='control'>
+              <input className='input'
+                type='text'
+                placeholder='Tecnología'
+                name='industry'
+                value={offerData.industry}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label">Tamaño</label>
+            <div className="control">
+              <div className="select">
+                <select
+                  name="companySize"
+                  value={offerData.companySize}
+                  onChange={handleChange}
+                >
+                  <option>Pequeña</option>
+                  <option>Mediana</option>
+                  <option>Grande</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label">Ubicación</label>
+            <div className="control">
+              <input className="input"
+                type="text"
+                placeholder="Santiago, Chile"
+                name="location"
+                value={offerData.location}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label">Descripción de la empresa</label>
+            <div className="control">
+              <textarea className="textarea"
+                placeholder="Misión, visión, valores, etc."
+                name="companyDescription"
+                value={offerData.companyDescription}
+                onChange={handleChange}
+              ></textarea>
+            </div>
+          </div>
+
           <div className="field">
             <label className="label">Nombre del rol</label>
             <div className="control">
@@ -109,7 +214,7 @@ function GenerateOfferPage() {
 
           <div className="field has-addons">
             <p className="control">
-              <a className="button is-static">$</a>
+              <a className="button is-static" href='#1'>$</a>
             </p>
             <p className="control">
               <input className="input" 
@@ -155,7 +260,11 @@ function GenerateOfferPage() {
 
           <div className="field">
             <p className="control">
+            {loading ? (
+              <button className="button is-success is-loading">Generar oferta</button>
+            ) :
               <button type="submit" className="button is-success">Generar oferta</button>
+            }
             </p>
           </div>
         </form>
