@@ -7,13 +7,13 @@ function GenerateOfferPage() {
     role: '',
     description: '',
     requirements: '',
-    rent: 0,
+    rent: 1000000,
     mail: '',
     type: 'Publicación LinkedIn',
     company: '',
-    companyType: 'Startup',
+    companyType: 'Empresa privada',
     industry: '',
-    companySize: 'Pequeña',
+    companySize: 'Mediana',
     location: '',
     companyDescription: ''
   });
@@ -64,6 +64,7 @@ function GenerateOfferPage() {
       }
 
       const data = await response.json();
+      data.type = jsonOffer.type;
 
       navigate('/detalle-oferta', { state: data });
 
@@ -83,195 +84,230 @@ function GenerateOfferPage() {
         </div>
       </nav>
 
-      <section className="section">
-        <h1 className="title">Generar nueva oferta</h1>
+      <section className='hero is-primary is-bold'>
+        <div className='hero-body'>
+          <div className='container'>
+            <h1 className='title'>Generar nueva oferta</h1>
+          </div>
+        </div>
+      </section>
+
+      <section className='section'>
         <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label className="label">Nombre de la empresa</label>
-            <div className="control">
-              <input className="input"
-                type="text"
-                placeholder="GPTRecruitment Labs"
-                name="company"
-                value={offerData.company}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+          <div className='card'>
+            <header className='card-header'>
+              <p className='card-header-title'>Características de la empresa</p>
+            </header>
+            <div className="card-content">
+              <div class="content">
+                <div className="field">
+                  <label className="label">Nombre</label>
+                  <div className="control">
+                    <input className="input"
+                      type="text"
+                      placeholder="Pontificia Universidad Católica de Chile"
+                      name="company"
+                      value={offerData.company}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
 
-          <div className="field">
-            <label className='label'>Tipo de empresa</label>
-            <div className="control">
-              <div className="select">
-                <select
-                  name="companyType"
-                  value={offerData.companyType}
-                  onChange={handleChange}
-                >
-                  <option>Startup</option>
-                  <option>Corporación</option>
-                  <option>ONG</option>
-                  <option>Empresa familiar</option>
-                  <option>Organismo del Estado</option>
-                </select>
+                <div className="field">
+                  <label className='label'>Tipo de empresa</label>
+                  <div className="control">
+                    <div className="select">
+                      <select
+                        name="companyType"
+                        value={offerData.companyType}
+                        onChange={handleChange}
+                      >
+                        <option>Startup</option>
+                        <option>Empresa privada</option>
+                        <option>Empresa pública</option>
+                        <option>ONG</option>
+                        <option>Organismo del Estado</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className='field'>
+                  <label className='label'>Industria</label>
+                  <div className='control has-icons-left'>
+                    <input className='input'
+                      type='text'
+                      placeholder='Educación'
+                      name='industry'
+                      value={offerData.industry}
+                      onChange={handleChange}
+                    />
+                    <span className='icon is-small is-left'>
+                      <i className='fas fa-industry'></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label">Tamaño</label>
+                  <div className="control">
+                    <div className="select">
+                      <select
+                        name="companySize"
+                        value={offerData.companySize}
+                        onChange={handleChange}
+                      >
+                        <option>Pequeña</option>
+                        <option>Mediana</option>
+                        <option>Grande</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label">Ubicación</label>
+                  <div className="control has-icons-left">
+                    <input className="input"
+                      type="text"
+                      placeholder="Santiago, Chile"
+                      name="location"
+                      value={offerData.location}
+                      onChange={handleChange}
+                    />
+                    <span className='icon is-small is-left'>
+                      <i className='fas fa-map-marked'></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label">Descripción</label>
+                  <div className="control">
+                    <textarea className="textarea"
+                      placeholder="Institución de educación superior con 136 años de historia, 5 campus, comprometida con el desarrollo de profesionales..."
+                      name="companyDescription"
+                      value={offerData.companyDescription}
+                      onChange={handleChange}
+                    ></textarea>
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label">Email de contacto</label>
+                  <div className="control has-icons-left">
+                    <input className="input" 
+                      type="email" 
+                      placeholder="contacto@uc.cl" 
+                      name="mail"
+                      value={offerData.mail}
+                      onChange={handleChange}
+                      />
+                    <span className="icon is-small is-left">
+                      <i className="fas fa-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
 
-          <div className='field'>
-            <label className='label'>Industria</label>
-            <div className='control'>
-              <input className='input'
-                type='text'
-                placeholder='Tecnología'
-                name='industry'
-                value={offerData.industry}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+          <div className='card'>
+            <header className="card-header">
+              <p className='card-header-title'>Características de la vacante</p>
+            </header>
+            <div className='card-content'>
+              <div className="field">
+                <label className="label">Nombre del rol</label>
+                <div className="control">
+                  <input className="input" 
+                    type="text" 
+                    placeholder="Analista de Recursos Humanos" 
+                    name="role" 
+                    value={offerData.role}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
 
-          <div className="field">
-            <label className="label">Tamaño</label>
-            <div className="control">
-              <div className="select">
-                <select
-                  name="companySize"
-                  value={offerData.companySize}
-                  onChange={handleChange}
-                >
-                  <option>Pequeña</option>
-                  <option>Mediana</option>
-                  <option>Grande</option>
-                </select>
+              <div className="field">
+                <label className="label">Descripción</label>
+                <div className="control">
+                  <textarea className="textarea" 
+                    placeholder="Analista encargado de evaluar postulaciones de interesados, redactar ofertas, asistir a ferias laborales..." 
+                    name="description"
+                    value={offerData.description}
+                    onChange={handleChange}
+                  ></textarea>
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">Requisitos</label>
+                <div className="control">
+                  <textarea className="textarea" 
+                    placeholder="Experiencia previa demostrable, manejo de Office, inglés básico, conocimiento de plataformas laborales como LinkedIn o Laborum" 
+                    name="requirements"
+                    value={offerData.requirements}
+                    onChange={handleChange}
+                  ></textarea>
+                </div>
+              </div>
+
+              <label className="label">Renta ofrecida</label>
+
+              <div className="field has-addons">
+                <p className="control">
+                  <a className="button is-static" href='#1'>$</a>
+                </p>
+                <p className="control">
+                  <input className="input" 
+                    type="number" 
+                    placeholder="1000000"
+                    name='rent'
+                    value={offerData.rent}
+                    onChange={handleChange}
+                  />
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="field">
-            <label className="label">Ubicación</label>
-            <div className="control">
-              <input className="input"
-                type="text"
-                placeholder="Santiago, Chile"
-                name="location"
-                value={offerData.location}
-                onChange={handleChange}
-              />
+          <div className='card'>
+            <div className='card-content'>
+              <div className="field">
+                <label className="label">Tipo de publicación</label>
+                <div className="select" >
+                  <select
+                    name="type"
+                    value={offerData.type}
+                    onChange={handleChange}
+                  >
+                    <option>Publicación LinkedIn</option>
+                    <option>Correo electrónico masivo</option>
+                    <option>Publicación genérica</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="field">
+                <p className="control">
+                {loading ? (
+                  <button className="button is-success is-loading">Generar oferta</button>
+                ) :
+                  <button type="submit" className="button is-success">Generar oferta</button>
+                }
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="field">
-            <label className="label">Descripción de la empresa</label>
-            <div className="control">
-              <textarea className="textarea"
-                placeholder="Misión, visión, valores, etc."
-                name="companyDescription"
-                value={offerData.companyDescription}
-                onChange={handleChange}
-              ></textarea>
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">Nombre del rol</label>
-            <div className="control">
-              <input className="input" 
-                type="text" 
-                placeholder="Analista de Recursos Humanos" 
-                name="role" 
-                value={offerData.role}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">Descripción del rol</label>
-            <div className="control">
-              <textarea className="textarea" 
-                placeholder="Descripción del rol" 
-                name="description"
-                value={offerData.description}
-                onChange={handleChange}
-              ></textarea>
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">Requisitos</label>
-            <div className="control">
-              <textarea className="textarea" 
-                placeholder="Requisitos" 
-                name="requirements"
-                value={offerData.requirements}
-                onChange={handleChange}
-              ></textarea>
-            </div>
-          </div>
-
-          <label className="label">Renta ofrecida</label>
-
-          <div className="field has-addons">
-            <p className="control">
-              <a className="button is-static" href='#1'>$</a>
-            </p>
-            <p className="control">
-              <input className="input" 
-                type="number" 
-                placeholder="1000000"
-                name='rent'
-                value={offerData.rent}
-                onChange={handleChange}
-              />
-            </p>
-          </div>
-
-          <div className="field">
-            <label className="label">Email de contacto</label>
-            <div className="control has-icons-left">
-              <input className="input" 
-                type="email" 
-                placeholder="contacto@gptrecruitment.cl" 
-                name="mail"
-                value={offerData.mail}
-                onChange={handleChange}
-                />
-              <span className="icon is-small is-left">
-                <i className="fas fa-envelope"></i>
-              </span>
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">Tipo de publicación</label>
-            <div className="select" >
-              <select
-                name="type"
-                value={offerData.type}
-                onChange={handleChange}
-              >
-                <option>Publicación LinkedIn</option>
-                <option>Correo electrónico masivo</option>
-                <option>Publicación genérica</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="field">
-            <p className="control">
-            {loading ? (
-              <button className="button is-success is-loading">Generar oferta</button>
-            ) :
-              <button type="submit" className="button is-success">Generar oferta</button>
-            }
-            </p>
-          </div>
         </form>
       </section>
 
       <footer className="footer">
-        <div className="content has-text-centered">© 2024 GPTRecruitment Labs</div>
+        <div className="content has-text-centered">© 2024 GPTLabs</div>
       </footer>
     </div>
   );
