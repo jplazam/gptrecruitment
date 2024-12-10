@@ -12,8 +12,18 @@ function OfferDetailsPage() {
   }
 
   const { role, content } = offerData.content;
-  const type = offerData.type || "Oferta Generada";
-  const keywords = offerData.keywords || ""
+  const type = "Oferta Generada";
+  let publication = "No se pudo generar la publicación.";
+  let keywords = null;
+
+  try {
+    // Intentar separar el contenido si sigue el formato esperado
+    const parts = content.split("Palabras clave:");
+    publication = parts[0]?.replace("Publicación:", "").trim() || publication;
+    keywords = parts[1]?.trim();
+  } catch (error) {
+    console.error("Error al procesar la respuesta de la API:", error);
+  }
 
   return (
     <div>
@@ -37,20 +47,35 @@ function OfferDetailsPage() {
             <p className='card-header-title'>{type}</p>
           </header>
           <div className='card-content'>
-            {content.split('\n').map((line, index) => (
+            {publication.split('\n').map((line, index) => (
               <p key={index}>{line}</p>
             ))}
           </div>
         </div>
 
-        <div className='card'>
-          <header className='card-header'>
-            <p className='card-header-title'>Palabras claves</p>
-          </header>
-          <div className='card-content'>
-            {keywords}
+        {keywords ? (
+          <div className='card'>
+            <header className='card-header'>
+              <p className='card-header-title'>Palabras claves</p>
+            </header>
+            <div className='card-content'>
+              {keywords.split(',').map((keyword, index) => (
+                <span key={index} className='tag is-info' style={{ marginRight: '5px' }}>
+                  {keyword.trim()}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className='card'>
+            <header className='card-header'>
+              <p className='card-header-title'>Palabras claves</p>
+            </header>
+            <div className='card-content'>
+              <p>No se encontraron palabras claves.</p>
+            </div>
+          </div>
+        )}
 
       </section>
 
