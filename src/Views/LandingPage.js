@@ -57,7 +57,7 @@ function LandingPage() {
       {/* Footer */}
       <footer className="footer">
         <div className="content has-text-centered">
-          <p>© 2024 GPTRecruitment Labs</p>
+          <p>© 2024 GPTLabs</p>
         </div>
       </footer>
     </div>

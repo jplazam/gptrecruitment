@@ -12,7 +12,7 @@ function OfferDetailsPage() {
   }
 
   const { role, content } = offerData.content;
-  const type = "Oferta Generada";
+  const type = offerData.type || "Oferta Generada";
   let publication = "No se pudo generar la publicación.";
   let keywords = null;
 
